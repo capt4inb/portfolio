@@ -659,10 +659,11 @@ const App = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-50"></div>
                     <img 
                       src="/z6735531149233_75673d7bb4c1b2199b723d0e42e33453 copy.jpg" 
-                      alt="Alex Johnson"
-                      className={`relative w-full aspect-square object-cover rounded-2xl border-2 ${
+                      alt="Le Trieu Phu"
+                      className={`relative w-full aspect-square object-top object-cover rounded-2xl border-2 ${
                         isDarkMode ? 'border-white/20' : 'border-gray-200'
                       }`}
+                      style={{ objectPosition: 'top' }}
                     />
                   </div>
                 </div>
@@ -968,12 +969,12 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
+      <section id="contact" className="py-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${
             isVisible.contact ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+            <h2 className={`text-6xl md:text-5xl font-bold mb-6 ${
               isDarkMode ? 'text-white' : 'text-gray-900'
             }`}>
               {t.contactTitle.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">{t.contactTitle.split(' ')[1]}</span>
@@ -985,57 +986,84 @@ const App = () => {
             </p>
           </div>
 
-          <div className={`grid md:grid-cols-3 gap-6 transition-all duration-1000 ${
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 transition-all duration-1000 ${
             isVisible.contact ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
+            {/* Email */}
             <a
-              href="mailto:alex.johnson@email.com"
+              href="mailto:trieuphuisme@gmail.com"
               className={`group ${
                 isDarkMode 
                   ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-purple-500/50 hover:bg-white/10' 
                   : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-purple-500/50 hover:bg-white'
-              } rounded-2xl p-8 border transition-all duration-300 hover:scale-105 text-center`}
+              } rounded-2xl p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center flex flex-col items-center`}
+              style={{ minWidth: 0 }}
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Mail className="w-8 h-8 text-white" />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+                <Mail className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.email}</h3>
-              <p className="text-purple-400">alex.johnson@email.com</p>
+              <h3 className={`text-lg md:text-xl font-semibold mb-1 md:mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.email}</h3>
+              <p 
+                className="text-purple-400 text-sm md:text-base break-all"
+                style={{ wordBreak: 'break-all' }}
+              >
+                trieuphuisme@gmail.com
+              </p>
             </a>
 
+            {/* LinkedIn */}
             <a
-              href="https://linkedin.com/in/alexjohnson"
+              href="https://www.linkedin.com/in/phule0520/"
               target="_blank"
               rel="noopener noreferrer"
               className={`group ${
                 isDarkMode 
                   ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-blue-500/50 hover:bg-white/10' 
                   : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-blue-500/50 hover:bg-white'
-              } rounded-2xl p-8 border transition-all duration-300 hover:scale-105 text-center`}
+              } rounded-2xl p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center flex flex-col items-center`}
+              style={{ minWidth: 0 }}
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Linkedin className="w-8 h-8 text-white" />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+                <Linkedin className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>LinkedIn</h3>
-              <p className="text-blue-400">{t.connectWithMe}</p>
+              <h3 className={`text-lg md:text-xl font-semibold mb-1 md:mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>LinkedIn</h3>
+              <p className="text-blue-400 text-sm md:text-base">{t.connectWithMe}</p>
             </a>
 
+            {/* GitHub */}
             <a
-              href="https://github.com/alexjohnson"
+              href="https://github.com/capt4inb"
               target="_blank"
               rel="noopener noreferrer"
               className={`group ${
                 isDarkMode 
                   ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-green-500/50 hover:bg-white/10' 
                   : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-green-500/50 hover:bg-white'
-              } rounded-2xl p-8 border transition-all duration-300 hover:scale-105 text-center`}
+              } rounded-2xl p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center flex flex-col items-center`}
+              style={{ minWidth: 0 }}
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Github className="w-8 h-8 text-white" />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+                <Github className="w-7 h-7 md:w-8 md:h-8 text-white" />
               </div>
-              <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>GitHub</h3>
-              <p className="text-green-400">{t.viewMyCode}</p>
+              <h3 className={`text-lg md:text-xl font-semibold mb-1 md:mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>GitHub</h3>
+              <p className="text-green-400 text-sm md:text-base">{t.viewMyCode}</p>
             </a>
+
+            {/* Phone */}
+            <div
+              className={`group ${
+                isDarkMode 
+                  ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-pink-500/50 hover:bg-white/10' 
+                  : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-pink-500/50 hover:bg-white'
+              } rounded-2xl p-6 md:p-8 border transition-all duration-300 hover:scale-105 text-center flex flex-col items-center justify-center`}
+              style={{ minWidth: 0 }}
+            >
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+                <Phone className="w-7 h-7 md:w-8 md:h-8 text-white" />
+              </div>
+              <h3 className={`text-lg md:text-xl font-semibold mb-1 md:mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.phone || 'Phone'}</h3>
+              <p className="text-pink-400 text-sm md:text-base break-all">036 5454 067</p>
+            </div>
           </div>
         </div>
       </section>
