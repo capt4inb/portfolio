@@ -381,9 +381,9 @@ const App = () => {
       technologies: ["Figma", "Photoshop", "Illustrator", "Adobe Tools"],
       responsibilities: t.linktoResponsibilities,
       images: [
-        "./public/linkto/linkto1.png",
-        "./public/linkto/linkto2.png",
-        "./public/linkto/linkto3.png"
+        "/linkto/linkto1.png",
+        "/linkto/linkto2.png",
+        "/linkto/linkto3.png"
       ],
       color: "from-purple-500 to-pink-500",
       figma: "https://www.figma.com/design/w45MpynaLvHlAbaOGOIl2I/APP-LINKTO?node-id=0-1&t=AtL10unOJdyIvN60-1"
@@ -397,9 +397,9 @@ const App = () => {
       technologies: ["Figma", "Photoshop", "Illustrator", "HTML", "Tailwind CSS", "JavaScript"],
       responsibilities: t.likelionResponsibilities,
       images: [
-        "./public/likelion/likelion1.png",
-        "./public/likelion/likelion2.jpg",
-        "./public/likelion/likelion3.png"
+        "/likelion/likelion1.png",
+        "/likelion/likelion2.jpg",
+        "/likelion/likelion3.png"
       ],
       color: "from-blue-500 to-cyan-500",
       figma: "https://www.figma.com/design/Co879ShvfG8pL14ua646i9/LIKELIION-JOB?node-id=0-1&t=a10YPHOy6o4HwVBN-1"
