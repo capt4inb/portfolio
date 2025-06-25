@@ -61,28 +61,43 @@ const FlagVI = () => (
   </span>
 );
 
-const App = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState({});
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const [typedText, setTypedText] = useState('');
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
+type Language = 'en' | 'vi';
 
-  const roles = {
+interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  period: string;
+  description: string;
+  technologies: string[];
+  responsibilities: string[];
+  images: string[];
+  color: string;
+  figma?: string;
+}
+
+const App = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [language, setLanguage] = useState<Language>('en');
+  const [typedText, setTypedText] = useState<string>('');
+  const [currentRoleIndex, setCurrentRoleIndex] = useState<number>(0);
+  const [isTyping, setIsTyping] = useState<boolean>(true);
+
+  const roles: Record<Language, string[]> = {
     en: ['UX/UI Designer', 'Graphic Designer'],
     vi: ['UX/UI Designer', 'Thiết Kế Đồ Họa']
   };
 
-  const translations = {
+  const translations: Record<Language, any> = {
     en: {
       // Navigation
       about: 'About',
       skills: 'Skills',
-      projects: 'Projects',
+      projectsNav: 'Projects',
       contact: 'Contact',
       
       // Hero Section
@@ -182,7 +197,7 @@ const App = () => {
       // Navigation
       about: 'Giới Thiệu',
       skills: 'Kỹ Năng',
-      projects: 'Dự Án',
+      projectsNav: 'Dự Án',
       contact: 'Liên Hệ',
       
       // Hero Section
@@ -285,7 +300,7 @@ const App = () => {
   // Typing effect
   useEffect(() => {
     const currentRole = roles[language][currentRoleIndex];
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (isTyping) {
       if (typedText.length < currentRole.length) {
@@ -329,7 +344,7 @@ const App = () => {
   }, []);
 
   // Smooth scroll to section
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       const navHeight = 80;
@@ -348,12 +363,13 @@ const App = () => {
   };
 
   // Language toggle
-  const toggleLanguage = (lang) => {
+  const toggleLanguage = (lang: Language) => {
     setLanguage(lang);
     setTypedText('');
     setCurrentRoleIndex(0);
     setIsTyping(true);
   };
+
   // Projects Data
   const projects = [
     {
@@ -365,11 +381,12 @@ const App = () => {
       technologies: ["Figma", "Photoshop", "Illustrator", "Adobe Tools"],
       responsibilities: t.linktoResponsibilities,
       images: [
-        "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "./public/linkto/linkto1.png",
+        "./public/linkto/linkto2.png",
+        "./public/linkto/linkto3.png"
       ],
-      color: "from-purple-500 to-pink-500"
+      color: "from-purple-500 to-pink-500",
+      figma: "https://www.figma.com/design/w45MpynaLvHlAbaOGOIl2I/APP-LINKTO?node-id=0-1&t=AtL10unOJdyIvN60-1"
     },
     {
       id: 2,
@@ -380,11 +397,12 @@ const App = () => {
       technologies: ["Figma", "Photoshop", "Illustrator", "HTML", "Tailwind CSS", "JavaScript"],
       responsibilities: t.likelionResponsibilities,
       images: [
-        "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/3184293/pexels-photo-3184293.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "./public/likelion/likelion1.png",
+        "./public/likelion/likelion2.jpg",
+        "./public/likelion/likelion3.png"
       ],
-      color: "from-blue-500 to-cyan-500"
+      color: "from-blue-500 to-cyan-500",
+      figma: "https://www.figma.com/design/Co879ShvfG8pL14ua646i9/LIKELIION-JOB?node-id=0-1&t=a10YPHOy6o4HwVBN-1"
     },
     {
       id: 3,
@@ -433,7 +451,7 @@ const App = () => {
     }
   };
 
-  const openProject = (project) => {
+  const openProject = (project: Project) => {
     setSelectedProject(project);
     setCurrentImageIndex(0);
     document.body.style.overflow = 'hidden';
@@ -468,7 +486,7 @@ const App = () => {
               {[
                 { id: 'about', label: t.about, icon: User },
                 { id: 'skills', label: t.skills, icon: Zap },
-                { id: 'projects', label: t.projects, icon: FolderOpen },
+                { id: 'projects', label: t.projectsNav, icon: FolderOpen },
                 { id: 'contact', label: t.contact, icon: Phone }
               ].map((item) => (
                 <button
@@ -558,7 +576,7 @@ const App = () => {
                 {[
                   { id: 'about', label: t.about, icon: User },
                   { id: 'skills', label: t.skills, icon: Zap },
-                  { id: 'projects', label: t.projects, icon: FolderOpen },
+                  { id: 'projects', label: t.projectsNav, icon: FolderOpen },
                   { id: 'contact', label: t.contact, icon: Phone }
                 ].map((item) => (
                   <button
@@ -1136,6 +1154,22 @@ const App = () => {
                   ))}
                 </ul>
               </div>
+
+              {/* Figma Button for project 1 and 2 */}
+              {('figma' in selectedProject) && selectedProject.figma && (
+                <div className="mt-4 flex">
+                  <a
+                    href={selectedProject.figma}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold shadow transition-all duration-300 hover:scale-105
+                      ${isDarkMode ? 'bg-purple-700 text-white hover:bg-purple-800' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`}
+                  >
+                    <Figma className="w-5 h-5" />
+                    {language === 'vi' ? 'Xem Figma' : 'View Figma'}
+                  </a>
+                </div>
+              )}
 
               {/* Project Images */}
               <div>
