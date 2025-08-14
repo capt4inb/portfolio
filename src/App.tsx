@@ -29,7 +29,19 @@ import {
   User,
   Zap,
   FolderOpen,
-  Phone
+  Phone,
+  Sparkles,
+  Cpu,
+  Database,
+  Network,
+  Wallet,
+  Coins,
+  Rocket,
+  Target,
+  Brain,
+  Eye,
+  Fingerprint,
+  Building
 } from 'lucide-react';
 
 const FlagEN = () => (
@@ -76,11 +88,81 @@ interface Project {
   figma?: string;
 }
 
+// Web3 Background Components
+const Web3Background = () => (
+  <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    {/* Animated Grid */}
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-indigo-900 to-slate-800">
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                           radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`,
+        }}></div>
+      </div>
+    </div>
+    
+    {/* Enhanced Floating Particles */}
+    <div className="absolute top-20 left-20 w-3 h-3 bg-indigo-400 rounded-full animate-pulse opacity-80"></div>
+    <div className="absolute top-40 right-32 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-90"></div>
+    <div className="absolute bottom-32 left-1/4 w-2.5 h-2.5 bg-pink-400 rounded-full animate-bounce opacity-85"></div>
+    <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-cyan-400 rounded-full animate-pulse opacity-70"></div>
+    <div className="absolute bottom-20 right-20 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-80"></div>
+    <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce opacity-75"></div>
+    
+    {/* Enhanced Geometric Shapes */}
+    <div className="absolute top-10 right-10 w-40 h-40 border border-indigo-500/30 rotate-45 animate-spin" style={{animationDuration: '25s'}}></div>
+    <div className="absolute bottom-10 left-10 w-32 h-32 border border-purple-500/30 rounded-full animate-pulse"></div>
+    <div className="absolute top-1/3 left-1/3 w-20 h-20 bg-gradient-to-br from-pink-500/20 to-purple-500/20 rounded-lg rotate-12 animate-bounce" style={{animationDuration: '4s'}}></div>
+    <div className="absolute top-2/3 right-1/4 w-16 h-16 bg-gradient-to-br from-cyan-500/15 to-blue-500/15 rounded-full animate-pulse" style={{animationDuration: '3s'}}></div>
+  </div>
+);
+
+const Web3Card = ({ children, className = "", glowColor = "purple", style }: { children: React.ReactNode, className?: string, glowColor?: string, style?: React.CSSProperties }) => {
+  const glowClasses = {
+    purple: "hover:shadow-purple-500/30",
+    cyan: "hover:shadow-cyan-500/30", 
+    pink: "hover:shadow-pink-500/30",
+    blue: "hover:shadow-blue-500/30",
+    emerald: "hover:shadow-emerald-500/30",
+    indigo: "hover:shadow-indigo-500/30"
+  };
+  
+  return (
+    <div className={`relative group ${className}`} style={style}>
+      {/* Enhanced Glow Effect */}
+      <div className={`absolute inset-0 bg-gradient-to-br from-${glowColor}-500/25 to-${glowColor}-600/25 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+      
+      {/* Card Content */}
+      <div className={`relative bg-gradient-to-br from-white/15 to-white/8 backdrop-blur-2xl border border-white/25 rounded-3xl p-6 transition-all duration-700 hover:scale-105 hover:border-${glowColor}-500/60 ${glowClasses[glowColor as keyof typeof glowClasses]}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const Web3Button = ({ children, onClick, variant = "primary", className = "" }: { children: React.ReactNode, onClick?: () => void, variant?: "primary" | "secondary" | "outline", className?: string }) => {
+  const baseClasses = "relative px-8 py-4 rounded-2xl font-bold transition-all duration-500 transform hover:scale-110 active:scale-95 cursor-pointer";
+  
+  const variants = {
+    primary: "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-white shadow-xl hover:shadow-indigo-500/40",
+    secondary: "bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 text-white shadow-xl hover:shadow-cyan-500/40",
+    outline: "border-3 border-indigo-500/60 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 backdrop-blur-xl"
+  };
+  
+  return (
+    <button className={`${baseClasses} ${variants[variant]} ${className}`} onClick={onClick}>
+      <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+      <span className="relative z-10">{children}</span>
+    </button>
+  );
+};
+
 const App = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true); // Default to dark for Web3
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [language, setLanguage] = useState<Language>('en');
   const [typedText, setTypedText] = useState<string>('');
@@ -374,12 +456,38 @@ const App = () => {
   const projects = [
     {
       id: 1,
-      title: t.linktoTitle,
-      subtitle: t.linktoSubtitle,
-      period: t.linktoPeriod,
-      description: t.linktoDescription,
-      technologies: ["Figma", "Photoshop", "Illustrator", "Adobe Tools"],
-      responsibilities: t.linktoResponsibilities,
+       title: "Water – Blockchain Platform Landing Page",
+       subtitle: "UX/UI Web Design (Freelance Project)",
+       period: "05/2025 - 06/2025",
+       description: "Blockchain platform landing page with focus on sustainability and modern design",
+       technologies: ["Figma", "Responsive Design", "UI/UX Design", "Prototyping"],
+       responsibilities: [
+         "Created desktop and mobile mockups in Figma, ensuring responsive layouts and consistent visual hierarchy",
+         "Developed a clean and modern UI that reflected the brand's identity and sustainability message",
+         "Collaborated with the development team to provide design specifications, component guidelines, and visual assets",
+         "Suggested UI improvements for call-to-action placement and content structure to improve conversion potential",
+         "Delivered high-fidelity prototypes on time, enabling smooth developer handoff and efficient build process"
+       ],
+       images: [
+         "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
+         "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
+       ],
+       color: "from-blue-500 to-cyan-500",
+       figma: "https://www.figma.com/design/gZN376p4mky6FFVbk975lk/Web-3-Landing-page--Freelance-?node-id=0-1&t=N3ZTdbjvHkZz2Ong-1"
+     },
+    {
+      id: 2,
+      title: "LINKTO Viet Nam",
+      subtitle: "UX/UI & Graphic Design",
+      period: "11/2024 - 03/2025",
+      description: "Comprehensive design solutions for influencer platform",
+      technologies: ["Figma", "Photoshop", "Illustrator", "Responsive Design", "Brand Identity"],
+      responsibilities: [
+        "Designed wireframes, interactive prototypes, and responsive web interfaces to ensure a seamless user experience across devices",
+        "Proposed and visualized new features and creative concepts that aligned with brand guidelines and project objectives",
+        "Implemented layout enhancements and design adjustments based on user testing results and stakeholder feedback",
+        "Created a professional logo and a comprehensive brand identity system, including typography, color palette, and iconography"
+      ],
       images: [
         "/linkto/linkto1.png",
         "/linkto/linkto2.png",
@@ -389,29 +497,60 @@ const App = () => {
       figma: "https://www.figma.com/design/w45MpynaLvHlAbaOGOIl2I/APP-LINKTO?node-id=0-1&t=AtL10unOJdyIvN60-1"
     },
     {
-      id: 2,
-      title: t.likelionTitle,
-      subtitle: t.likelionSubtitle,
-      period: t.likelionPeriod,
-      description: t.likelionDescription,
+      id: 3,
+      title: "LIKELION Viet Nam",
+      subtitle: "UX/UI Web Design",
+      period: "06/2024 - 10/2024",
+      description: "Korean-led coding training center website design",
       technologies: ["Figma", "Photoshop", "Illustrator", "HTML", "Tailwind CSS", "JavaScript"],
-      responsibilities: t.likelionResponsibilities,
+      responsibilities: [
+        "Built wireframes, high-fidelity prototypes, and interactive mockups to visualize and refine user flows",
+        "Collaborated closely with developers to ensure pixel-perfect implementation of designs",
+        "Maintained design system consistency across all screens and components",
+        "Improved layouts and interactions based on user testing insights and stakeholder feedback"
+      ],
       images: [
         "/likelion/likelion1.png",
         "/likelion/likelion2.jpg",
         "/likelion/likelion3.png"
       ],
-      color: "from-blue-500 to-cyan-500",
-      figma: "https://www.figma.com/design/Co879ShvfG8pL14ua646i9/LIKELIION-JOB?node-id=0-1&t=a10YPHOy6o4HwVBN-1"
+             color: "from-green-500 to-emerald-500",
+       figma: "https://www.figma.com/design/2yXyFNJkuaGIbdrXBnvkXc/Jobspot?node-id=1-48&t=wzrN82kDH09DqiFp-1"
     },
     {
-      id: 3,
-      title: t.studioTitle,
-      subtitle: t.studioSubtitle,
-      period: t.studioPeriod,
-      description: t.studioDescription,
-      technologies: ["Canva", "Photoshop", "Illustrator", "Premiere"],
-      responsibilities: t.studioResponsibilities,
+      id: 4,
+      title: "UrbanFit – Fashion & Lifestyle Onboarding App",
+      subtitle: "UX/UI & Graphic Design (Freelance Project)",
+      period: "03/2024 - 07/2024",
+      description: "Mobile app onboarding experience for fashion and lifestyle brand",
+      technologies: ["Figma", "Mobile Design", "UI/UX Design", "Brand Design", "Prototyping"],
+      responsibilities: [
+        "Created splash screen, onboarding flow, and responsive mobile layouts with brand-consistent typography, color palette, and imagery",
+        "Developed interactive high-fidelity mockups and design prototypes in Figma for developer handoff",
+        "Collaborated closely with developers to ensure design feasibility and pixel-perfect implementation",
+        "Participated in brainstorming sessions with the marketing team to align visuals with campaign messages",
+        "Delivered final design assets on schedule, resulting in a smooth development process and positive client feedback"
+      ],
+             images: [
+         "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
+         "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
+       ],
+       color: "from-pink-500 to-rose-500",
+       figma: "https://www.figma.com/design/p3Pvh4KHq82PDEgD6TP6Hc/Freelance---Ecommerce-App?node-id=0-1&t=4IO0rKhZV5qviD5u-1"
+    },
+    {
+      id: 5,
+      title: "25h Studio",
+      subtitle: "Branding & Marketing Design",
+      period: "05/2020 - 09/2021",
+      description: "Comprehensive branding and marketing design services",
+      technologies: ["Canva", "Photoshop", "Illustrator", "Premiere", "Brand Identity"],
+      responsibilities: [
+        "Designed logos and developed comprehensive brand identity systems, including typography, color palettes, and visual guidelines",
+        "Created marketing collateral such as brochures, packaging, and POS materials to support product launches and brand campaigns",
+        "Edited product images and created realistic mockups for e-commerce platforms to enhance visual appeal and conversion rates",
+        "Collaborated with the design team on revisions and new product concepts based on client requirements and market trends"
+      ],
       images: [
         "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
         "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -467,50 +606,51 @@ const App = () => {
     : 'bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 text-gray-900';
 
   return (
-    <div className={`min-h-screen transition-all duration-500 ${themeClasses}`}>
+    <div className="min-h-screen bg-gradient-to-br from-slate-800 via-indigo-900 to-slate-800 text-white relative overflow-hidden">
+      {/* Web3 Background */}
+      <Web3Background />
+      
       {/* Navigation Bar */}
-      <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isDarkMode 
-          ? 'bg-slate-900/80 backdrop-blur-lg border-b border-white/10' 
-          : 'bg-white/80 backdrop-blur-lg border-b border-gray-200/50'
-      }`}>
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-slate-800/30 backdrop-blur-2xl border-b border-white/20">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="text-2xl font-bold">
-              <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'}`}></span>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
+                <Sparkles className="w-7 h-7 text-white" />
+              </div>
+              <span className="text-3xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Le Phu
+              </span>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               {[
-                { id: 'about', label: t.about, icon: User },
-                { id: 'skills', label: t.skills, icon: Zap },
-                { id: 'projects', label: t.projectsNav, icon: FolderOpen },
-                { id: 'contact', label: t.contact, icon: Phone }
+                { id: 'about', label: t.about, icon: User, color: 'indigo' },
+                { id: 'skills', label: t.skills, icon: Zap, color: 'purple' },
+                { id: 'projects', label: t.projectsNav, icon: FolderOpen, color: 'pink' },
+                { id: 'contact', label: t.contact, icon: Phone, color: 'cyan' }
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 ${
-                    isDarkMode 
-                      ? 'text-gray-300 hover:text-white hover:bg-white/10' 
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
+                  className="group relative flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-500 hover:scale-110 text-gray-200 hover:text-white font-semibold"
                 >
-                  <item.icon className="w-4 h-4" />
-                  {item.label}
+                  {/* Enhanced Glow Effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-r from-${item.color}-500/30 to-${item.color}-600/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                  
+                  <item.icon className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">{item.label}</span>
                 </button>
               ))}
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-4">
-              {/* Language Toggle Switch - Fixed UI/UX */}
+            <div className="flex items-center gap-6">
+              {/* Language Toggle Switch */}
               <div
-                className={`relative w-28 h-11 flex items-center select-none cursor-pointer transition-colors duration-300
-                  ${isDarkMode ? 'bg-[#232b36]' : 'bg-[#f3f4f6]'}
-                  rounded-full border ${isDarkMode ? 'border-[#2d3748]' : 'border-[#e5e7eb]'} shadow-sm`}
+                className="relative w-32 h-12 flex items-center select-none cursor-pointer bg-slate-700/60 backdrop-blur-2xl rounded-full border border-white/30 shadow-xl"
                 onClick={() => toggleLanguage(language === 'en' ? 'vi' : 'en')}
                 role="button"
                 tabIndex={0}
@@ -518,51 +658,46 @@ const App = () => {
               >
                 {/* Labels */}
                 <span
-                  className={`absolute left-4 top-1/2 -translate-y-1/2 text-base font-bold tracking-widest transition-colors duration-200
-                    ${language === 'vi' ? (isDarkMode ? 'text-white' : 'text-gray-800') : (isDarkMode ? 'text-gray-500' : 'text-gray-400')}`}
+                  className={`absolute left-5 top-1/2 -translate-y-1/2 text-sm font-black tracking-widest transition-colors duration-300 ${
+                    language === 'vi' ? 'text-white' : 'text-gray-400'
+                  }`}
                   style={{ zIndex: 1 }}
                 >
                   VI
                 </span>
                 <span
-                  className={`absolute right-4 top-1/2 -translate-y-1/2 text-base font-bold tracking-widest transition-colors duration-200
-                    ${language === 'en' ? (isDarkMode ? 'text-white' : 'text-gray-800') : (isDarkMode ? 'text-gray-500' : 'text-gray-400')}`}
+                  className={`absolute right-5 top-1/2 -translate-y-1/2 text-sm font-black tracking-widest transition-colors duration-300 ${
+                    language === 'en' ? 'text-white' : 'text-gray-400'
+                  }`}
                   style={{ zIndex: 1 }}
                 >
                   EN
                 </span>
                 {/* Thumb */}
                 <div
-                  className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center shadow-lg border-2 transition-all duration-300
-                    ${language === 'vi' ? 'left-2' : 'right-2'}
-                    ${isDarkMode ? 'bg-[#232b36] border-[#2d3748]' : 'bg-white border-white'}
-                    hover:scale-105 active:scale-95`}
+                  className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center shadow-xl border-2 transition-all duration-500 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 border-indigo-400 hover:scale-110 active:scale-95 ${
+                    language === 'vi' ? 'left-2' : 'right-2'
+                  }`}
                   style={{ zIndex: 2 }}
                 >
                   {language === 'vi' ? <FlagVI /> : <FlagEN />}
                 </div>
               </div>
+              
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
-                className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                  isDarkMode 
-                    ? 'text-yellow-400 hover:bg-white/10' 
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
+                className="p-3 rounded-2xl bg-slate-700/60 backdrop-blur-2xl border border-white/30 text-yellow-300 hover:text-white hover:bg-indigo-500/30 transition-all duration-500 hover:scale-110 shadow-xl"
               >
-                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
               </button>
+              
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden p-2 rounded-full transition-all duration-300 ${
-                  isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-white/10' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                className="md:hidden p-3 rounded-2xl bg-slate-700/60 backdrop-blur-2xl border border-white/30 text-gray-200 hover:text-white hover:bg-indigo-500/30 transition-all duration-500 shadow-xl"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </button>
             </div>
           </div>
@@ -599,389 +734,605 @@ const App = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
-        <div className={`absolute inset-0 ${
-          isDarkMode 
-            ? 'bg-gradient-to-r from-purple-600/20 to-pink-600/20' 
-            : 'bg-gradient-to-r from-blue-600/10 to-purple-600/10'
-        }`}></div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Web3 Hero Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-slate-800/60 to-purple-900/40"></div>
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-500/25 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/25 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500/20 rounded-full blur-2xl animate-pulse" style={{animationDelay: '3s'}}></div>
+          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-cyan-500/15 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
         
         <div className={`relative z-10 text-center px-6 transition-all duration-1000 ${
           isVisible.hero ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <div className="inline-block p-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-6">
-            <div className={`${isDarkMode ? 'bg-slate-900' : 'bg-white'} rounded-full px-6 py-2`}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-medium">
+          {/* Web3 Badge */}
+          <div className="inline-block mb-12">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-60 animate-pulse"></div>
+              <div className="relative bg-slate-800/90 backdrop-blur-2xl border border-indigo-500/40 rounded-3xl px-10 py-5">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 font-black text-xl">
                 {typedText}
-                <span className="animate-pulse">|</span>
+                  <span className="animate-pulse text-indigo-400">|</span>
               </span>
-            </div>
-          </div>
-          
-          <h1 className={`text-4xl md:text-6xl font-bold mb-6 leading-tight ${
-            isDarkMode ? 'text-white' : 'text-gray-900'
-          }`}>
-            {t.heroTitle.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">{t.heroTitle.split(' ')[1]}</span>
-          </h1>
-          
-          <p className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-2 ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-600'
-          }`}>
-            {t.heroSubtitle}
-          </p>
-          
-          <p className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-600'
-          }`}>
-            <span className="text-purple-400 font-semibold">{t.heroExperience}</span> {t.heroExperienceText}
-          </p>
-          
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => scrollToSection('projects')}
-              className="group bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
-            >
-              <span className="flex items-center justify-center gap-2">
-                {t.viewWork}
-                <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className={`border-2 border-purple-400 text-purple-400 px-8 py-4 rounded-full font-semibold hover:bg-purple-400 hover:text-white transition-all duration-300 ${
-                isDarkMode ? '' : 'hover:text-white'
-              }`}
-            >
-              {t.getInTouch}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className={`transition-all duration-1000 ${
-            isVisible.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className={`${
-              isDarkMode 
-                ? 'bg-white/5 backdrop-blur-lg border-white/10' 
-                : 'bg-white/80 backdrop-blur-lg border-gray-200/50'
-            } rounded-3xl p-8 md:p-12 border`}>
-              <div className="grid md:grid-cols-3 gap-8 items-start">
-                {/* Profile Image */}
-                <div className="md:col-span-1">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-50"></div>
-                    <img 
-                      src="/z6735531149233_75673d7bb4c1b2199b723d0e42e33453 copy.jpg" 
-                      alt="Le Trieu Phu"
-                      className={`relative w-full aspect-square object-top object-cover rounded-2xl border-2 ${
-                        isDarkMode ? 'border-white/20' : 'border-gray-200'
-                      }`}
-                      style={{ objectPosition: 'top' }}
-                    />
-                  </div>
-                </div>
-
-                {/* Profile Info */}
-                <div className="md:col-span-2 space-y-6">
-                  <div>
-                    <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>{t.aboutTitle}</h2>
-                    <p className={`text-lg leading-relaxed ${
-                      isDarkMode ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
-                      {t.aboutDescription}
-                    </p>
-                  </div>
-
-                  {/* Stats */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className={`${
-                      isDarkMode 
-                        ? 'bg-white/5 border-white/10' 
-                        : 'bg-white/50 border-gray-200'
-                    } rounded-xl p-4 text-center border`}>
-                      <div className="text-2xl font-bold text-purple-400">2+</div>
-                      <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.yearsExperience}</div>
-                    </div>
-                    <div className={`${
-                      isDarkMode 
-                        ? 'bg-white/5 border-white/10' 
-                        : 'bg-white/50 border-gray-200'
-                    } rounded-xl p-4 text-center border`}>
-                      <div className="text-2xl font-bold text-pink-400">15+</div>
-                      <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.projects}</div>
-                    </div>
-                    <div className={`${
-                      isDarkMode 
-                        ? 'bg-white/5 border-white/10' 
-                        : 'bg-white/50 border-gray-200'
-                    } rounded-xl p-4 text-center border`}>
-                      <div className="text-2xl font-bold text-cyan-400">3</div>
-                      <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.companies}</div>
-                    </div>
-                    <div className={`${
-                      isDarkMode 
-                        ? 'bg-white/5 border-white/10' 
-                        : 'bg-white/50 border-gray-200'
-                    } rounded-xl p-4 text-center border`}>
-                      <div className="text-2xl font-bold text-green-400">100%</div>
-                      <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.satisfaction}</div>
-                    </div>
-                  </div>
-
-                  {/* Timeline */}
-                  <div className="space-y-4">
-                    <h3 className={`text-xl font-semibold mb-4 ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>{t.experienceEducation}</h3>
-                    
-                    {/* Education */}
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                        <GraduationCap className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.university}</h4>
-                        <p className="text-purple-400 text-sm">{t.universityMajor}</p>
-                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.universityPeriod} • {t.universityGrade}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                        <Award className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.school}</h4>
-                        <p className="text-purple-400 text-sm">{t.schoolMajor}</p>
-                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.schoolPeriod} • {t.schoolAward}</p>
-                      </div>
-                    </div>
-
-                    {/* Military Service */}
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
-                        <Shield className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.military}</h4>
-                        <p className="text-purple-400 text-sm">{t.militaryRole}</p>
-                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.militaryPeriod} • {t.militaryUnit}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Languages */}
-                  <div className="flex flex-wrap gap-2">
-                    <span className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-sm">
-                      {t.englishGood}
-                    </span>
-                    <span className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-blue-300 px-3 py-1 rounded-full text-sm">
-                      {t.koreanLearning}
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+          
+          {/* Main Title */}
+          <h1 className="text-6xl md:text-8xl font-black mb-10 leading-tight">
+            <span className="text-white">{t.heroTitle.split(' ')[0]}</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 animate-pulse">
+              {t.heroTitle.split(' ')[1]}
+            </span>
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="text-2xl md:text-3xl max-w-5xl mx-auto leading-relaxed mb-6 text-gray-200 font-medium">
+            {t.heroSubtitle}
+          </p>
+          
+          {/* Experience */}
+          <p className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed mb-16 text-gray-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 font-black">
+              {t.heroExperience}
+            </span> {t.heroExperienceText}
+          </p>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Web3Button 
+              onClick={() => scrollToSection('projects')}
+              variant="primary"
+              className="group"
+            >
+              <span className="flex items-center justify-center gap-3">
+                <Rocket className="w-5 h-5" />
+                {t.viewWork}
+                <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Web3Button>
+            
+            <Web3Button 
+              onClick={() => scrollToSection('contact')}
+              variant="outline"
+              className="group"
+            >
+              <span className="flex items-center justify-center gap-3">
+                <MessageCircle className="w-5 h-5" />
+              {t.getInTouch}
+              </span>
+            </Web3Button>
+          </div>
+          
+          {/* Enhanced Floating Elements */}
+          <div className="absolute top-20 left-20 w-5 h-5 bg-indigo-400 rounded-full animate-bounce opacity-80"></div>
+          <div className="absolute top-40 right-32 w-4 h-4 bg-purple-400 rounded-full animate-ping opacity-90"></div>
+          <div className="absolute bottom-32 left-1/4 w-3 h-3 bg-pink-400 rounded-full animate-pulse opacity-85"></div>
+          <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-cyan-400 rounded-full animate-bounce opacity-75"></div>
+          <div className="absolute bottom-20 right-20 w-4 h-4 bg-emerald-400 rounded-full animate-ping opacity-80"></div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className={`text-center mb-16 transition-all duration-1000 ${
-            isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      {/* About Section - Web3 Redesign */}
+      <section id="about" className="py-32 px-6 relative">
+        {/* Web3 Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-purple-500/20 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-500/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Header */}
+          <div className={`text-center mb-20 transition-all duration-1000 ${
+            isVisible.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              {t.skillsTitle.split('&')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">&{t.skillsTitle.split('&')[1]}</span>
+            <h2 className="text-5xl md:text-6xl font-black mb-8">
+              <span className="text-white">{t.aboutTitle.split(' ')[0]}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                {t.aboutTitle.split(' ')[1]}
+              </span>
             </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
-            }`}>
-              {t.skillsSubtitle}
-            </p>
+            <div className="w-32 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mx-auto rounded-full"></div>
           </div>
 
-          {/* Skills organized in two rows */}
-          <div className="space-y-8">
-            {/* First Row */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-              {skills.slice(0, 6).map((skill, index) => (
-                <div
-                  key={skill.name}
-                  className={`group ${
-                    isDarkMode 
-                      ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-purple-500/50 hover:bg-white/10' 
-                      : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-purple-500/50 hover:bg-white'
-                  } rounded-2xl p-6 border transition-all duration-500 hover:scale-105 cursor-pointer ${
-                    isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex flex-col items-center text-center space-y-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-                      <skill.icon className="w-6 h-6 text-white" />
+          {/* Main Content Grid */}
+          <div className={`grid lg:grid-cols-12 gap-12 transition-all duration-1000 ${
+            isVisible.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            
+            {/* Left Column - Profile & Stats */}
+            <div className="lg:col-span-5 space-y-8">
+              {/* Profile Card */}
+              <Web3Card className="p-8" glowColor="indigo">
+                <div className="text-center">
+                {/* Profile Image */}
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-60 animate-pulse"></div>
+                    <img 
+                      src="/z6735531149233_75673d7bb4c1b2199b723d0e42e33453 copy.jpg" 
+                      alt="Le Trieu Phu"
+                      className="relative w-48 h-48 object-top object-cover rounded-full border-4 border-white/30 shadow-2xl"
+                      style={{ objectPosition: 'top' }}
+                    />
+                    {/* Floating Elements */}
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-indigo-400 rounded-full animate-ping"></div>
+                    <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-400 rounded-full animate-pulse"></div>
+                </div>
+
+                  {/* Name & Title */}
+                  <h3 className="text-2xl font-black text-white mb-2">Le Trieu Phu</h3>
+                  <p className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-bold text-lg mb-4">
+                    {typedText}
+                    <span className="animate-pulse text-indigo-400">|</span>
+                  </p>
+                  
+                  {/* Description */}
+                  <p className="text-gray-300 leading-relaxed">
+                      {t.aboutDescription}
+                    </p>
+                  </div>
+              </Web3Card>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { value: "2+", label: t.yearsExperience, color: "indigo", icon: Target },
+                  { value: "5", label: t.projects, color: "purple", icon: FolderOpen },
+                  { value: "5", label: t.companies, color: "pink", icon: Building },
+                  { value: "100%", label: t.satisfaction, color: "cyan", icon: Award }
+                ].map((stat, index) => (
+                  <div key={index} className="group relative">
+                    <div className={`absolute inset-0 bg-gradient-to-br from-${stat.color}-500/40 to-${stat.color}-600/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+                    <div className="relative bg-slate-700/70 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 text-center group-hover:border-indigo-500/60 transition-all duration-700 group-hover:scale-110">
+                      <div className="flex items-center justify-center mb-2">
+                        <stat.icon className={`w-6 h-6 text-${stat.color}-400`} />
                     </div>
-                    <h3 className={`font-semibold group-hover:text-purple-400 transition-colors ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>
+                      <div className={`text-2xl font-black text-${stat.color}-400`}>{stat.value}</div>
+                      <div className="text-xs text-gray-300 font-medium">{stat.label}</div>
+                    </div>
+                    </div>
+                ))}
+                    </div>
+                  </div>
+
+            {/* Right Column - Timeline & Languages */}
+            <div className="lg:col-span-7 space-y-8">
+              {/* Experience Timeline */}
+              <Web3Card className="p-8" glowColor="purple">
+                <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-white" />
+                  </div>
+                  {t.experienceEducation}
+                </h3>
+                
+                <div className="space-y-6">
+                  {/* Education Items */}
+                  <div className="relative pl-8 border-l-2 border-indigo-500/30">
+                    <div className="absolute left-[-9px] top-0 w-4 h-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+                    <div className="bg-slate-700/50 backdrop-blur-xl rounded-xl p-4 border border-white/20">
+                      <h4 className="font-bold text-white mb-1">{t.university}</h4>
+                      <p className="text-indigo-400 text-sm font-medium">{t.universityMajor}</p>
+                      <p className="text-gray-400 text-sm">{t.universityPeriod} • {t.universityGrade}</p>
+                      </div>
+                    </div>
+
+                  <div className="relative pl-8 border-l-2 border-purple-500/30">
+                    <div className="absolute left-[-9px] top-0 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+                    <div className="bg-slate-700/50 backdrop-blur-xl rounded-xl p-4 border border-white/20">
+                      <h4 className="font-bold text-white mb-1">{t.school}</h4>
+                      <p className="text-purple-400 text-sm font-medium">{t.schoolMajor}</p>
+                      <p className="text-gray-400 text-sm">{t.schoolPeriod} • {t.schoolAward}</p>
+                      </div>
+                    </div>
+
+                  <div className="relative pl-8 border-l-2 border-pink-500/30">
+                    <div className="absolute left-[-9px] top-0 w-4 h-4 bg-gradient-to-r from-pink-500 to-red-500 rounded-full"></div>
+                    <div className="bg-slate-700/50 backdrop-blur-xl rounded-xl p-4 border border-white/20">
+                      <h4 className="font-bold text-white mb-1">{t.military}</h4>
+                      <p className="text-pink-400 text-sm font-medium">{t.militaryRole}</p>
+                      <p className="text-gray-400 text-sm">{t.militaryPeriod} • {t.militaryUnit}</p>
+                      </div>
+                      </div>
+                    </div>
+              </Web3Card>
+
+                  {/* Languages */}
+              <Web3Card className="p-8" glowColor="cyan">
+                <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Globe className="w-4 h-4 text-white" />
+                  </div>
+                  Languages
+                </h3>
+                
+                <div className="flex flex-wrap gap-4">
+                  <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/40 text-indigo-300 px-6 py-3 rounded-2xl text-lg font-bold backdrop-blur-xl">
+                      {t.englishGood}
+                  </div>
+                  <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/40 text-cyan-300 px-6 py-3 rounded-2xl text-lg font-bold backdrop-blur-xl">
+                      {t.koreanLearning}
+                  </div>
+                </div>
+              </Web3Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+                     {/* Skills Section - Web3 Redesign */}
+        <section id="skills" className="py-32 px-6 relative">
+          {/* Web3 Background Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/20 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Section Header */}
+            <div className={`text-center mb-20 transition-all duration-1000 ${
+            isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+              <h2 className="text-5xl md:text-6xl font-black mb-8">
+                <span className="text-white">{t.skillsTitle.split('&')[0]}</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                  &{t.skillsTitle.split('&')[1]}
+                </span>
+            </h2>
+              <p className="text-xl max-w-4xl mx-auto text-gray-200 font-medium mb-8">
+              {t.skillsSubtitle}
+            </p>
+              <div className="w-32 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mx-auto rounded-full"></div>
+          </div>
+
+            {/* Skills Categories */}
+            <div className={`transition-all duration-1000 ${
+                    isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
+              
+              {/* Design Tools Category */}
+              <div className="mb-16">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Palette className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-black text-white">{t.designTools}</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {skills.filter(skill => skill.category === t.designTools).map((skill, index) => (
+                    <div key={skill.name} className="group relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 to-purple-500/30 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      <div className="relative bg-slate-700/70 backdrop-blur-2xl border border-white/30 rounded-3xl p-6 text-center group-hover:border-indigo-500/60 transition-all duration-700 group-hover:scale-110">
+                        <div className="relative mb-4">
+                          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                            <skill.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
+                          </div>
+                          {/* Floating Particles */}
+                          <div className="absolute -top-2 -right-2 w-4 h-4 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
+                          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>
+                        </div>
+                        <h4 className="font-bold text-lg text-white group-hover:text-indigo-300 transition-colors duration-300 mb-3">
                       {skill.name}
-                    </h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      isDarkMode 
-                        ? 'bg-purple-500/20 text-purple-300' 
-                        : 'bg-purple-100 text-purple-600'
-                    }`}>
-                      {skill.category}
-                    </span>
+                        </h4>
+                        <div className="w-full bg-slate-600/50 rounded-full h-3 group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:to-purple-400 transition-all duration-500">
+                          <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-1000 group-hover:w-full shadow-lg" style={{ width: '90%' }}></div>
+                        </div>
                   </div>
                 </div>
               ))}
+                </div>
             </div>
 
-            {/* Second Row */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-              {skills.slice(6, 12).map((skill, index) => (
-                <div
-                  key={skill.name}
-                  className={`group ${
-                    isDarkMode 
-                      ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-purple-500/50 hover:bg-white/10' 
-                      : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-purple-500/50 hover:bg-white'
-                  } rounded-2xl p-6 border transition-all duration-500 hover:scale-105 cursor-pointer ${
-                    isVisible.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  }`}
-                  style={{ transitionDelay: `${(index + 6) * 100}ms` }}
-                >
-                  <div className="flex flex-col items-center text-center space-y-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-                      <skill.icon className="w-6 h-6 text-white" />
+              {/* Development Category */}
+              <div className="mb-16">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Code className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className={`font-semibold group-hover:text-blue-400 transition-colors ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>
+                  <h3 className="text-3xl font-black text-white">{t.development}</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {skills.filter(skill => skill.category === t.development).map((skill, index) => (
+                    <div key={skill.name} className="group relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/30 to-blue-500/30 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      <div className="relative bg-slate-700/70 backdrop-blur-2xl border border-white/30 rounded-3xl p-6 text-center group-hover:border-cyan-500/60 transition-all duration-700 group-hover:scale-110">
+                        <div className="relative mb-4">
+                          <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                            <skill.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
+                          </div>
+                          {/* Floating Particles */}
+                          <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
+                          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>
+                        </div>
+                        <h4 className="font-bold text-lg text-white group-hover:text-cyan-300 transition-colors duration-300 mb-3">
                       {skill.name}
-                    </h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      isDarkMode 
-                        ? 'bg-blue-500/20 text-blue-300' 
-                        : 'bg-blue-100 text-blue-600'
-                    }`}>
-                      {skill.category}
-                    </span>
+                        </h4>
+                        <div className="w-full bg-slate-600/50 rounded-full h-3 group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 transition-all duration-500">
+                          <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-3 rounded-full transition-all duration-1000 group-hover:w-full shadow-lg" style={{ width: '85%' }}></div>
+                        </div>
                   </div>
                 </div>
               ))}
+                </div>
+              </div>
+
+              {/* Research Category */}
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-black text-white">{t.research}</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {skills.filter(skill => skill.category === t.research).map((skill, index) => (
+                    <div key={skill.name} className="group relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-green-500/30 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      <div className="relative bg-slate-700/70 backdrop-blur-2xl border border-white/30 rounded-3xl p-6 text-center group-hover:border-emerald-500/60 transition-all duration-700 group-hover:scale-110">
+                        <div className="relative mb-4">
+                          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                            <skill.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
+                          </div>
+                          {/* Floating Particles */}
+                          <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
+                          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-emerald-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>
+                        </div>
+                        <h4 className="font-bold text-lg text-white group-hover:text-emerald-300 transition-colors duration-300 mb-3">
+                          {skill.name}
+                        </h4>
+                        <div className="w-full bg-slate-600/50 rounded-full h-3 group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-green-400 transition-all duration-500">
+                          <div className="bg-gradient-to-r from-emerald-500 to-green-500 h-3 rounded-full transition-all duration-1000 group-hover:w-full shadow-lg" style={{ width: '95%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className={`text-center mb-16 transition-all duration-1000 ${
+      <section id="projects" className="py-20 px-6 relative">
+        {/* Web3 Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className={`text-center mb-20 transition-all duration-1000 ${
             isVisible.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              {t.projectsTitle.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">{t.projectsTitle.split(' ')[1]}</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-white">{t.projectsTitle.split(' ')[0]}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">
+                {t.projectsTitle.split(' ')[1]}
+              </span>
             </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
-            }`}>
+            <p className="text-lg max-w-3xl mx-auto text-gray-300">
               {t.projectsSubtitle}
             </p>
           </div>
 
-          <div className="space-y-8">
+          {/* Enhanced Web3 Timeline Container */}
+          <div className="relative">
+            {/* Animated Timeline Line */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 transform -translate-x-1/2">
+              <div className="w-full h-full bg-gradient-to-b from-purple-400 via-pink-400 to-cyan-400 shadow-lg rounded-full"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-400 via-pink-400 to-cyan-400 rounded-full animate-pulse opacity-50"></div>
+            </div>
+            
+            {/* Projects Timeline */}
+            <div className="space-y-10">
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                className={`group cursor-pointer transition-all duration-700 ${
+                  className={`relative transition-all duration-700 ${
                   isVisible.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                } ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                style={{ transitionDelay: `${index * 200}ms` }}
-                onClick={() => openProject(project)}
-              >
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                >
+                  {/* Timeline Dot */}
+                  <div className={`absolute left-6 md:left-1/2 w-5 h-5 rounded-full border-3 transform -translate-x-1/2 shadow-lg ${
+                    isDarkMode ? 'bg-slate-900 border-purple-400' : 'bg-white border-purple-400'
+                  } z-10`}></div>
+                   
+                  {/* Project Card - Left Side (Even Index) */}
+                  {index % 2 === 0 ? (
+                    <div className="ml-16 md:mr-auto md:pr-8 md:w-[48%]">
                 <div className={`${
                   isDarkMode 
                     ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-purple-500/50 hover:bg-white/10' 
                     : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-purple-500/50 hover:bg-white'
-                } rounded-3xl p-8 border transition-all duration-500 hover:scale-[1.02] flex flex-col md:flex-row gap-8 items-center ${
-                  index % 2 === 0 ? '' : 'md:flex-row-reverse'
-                }`}>
-                  {/* Project Visual */}
-                  <div className="flex-1 relative">
-                    <div className={`absolute inset-0 bg-gradient-to-r ${project.color} rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity`}></div>
-                    <div className={`relative ${
-                      isDarkMode ? 'bg-white/10' : 'bg-white/50'
-                    } rounded-2xl p-6 aspect-video flex items-center justify-center border ${
-                      isDarkMode ? 'border-white/20' : 'border-gray-200'
-                    }`}>
-                      <div className="text-center">
-                        <div className={`w-16 h-16 bg-gradient-to-r ${project.color} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                          <Briefcase className="w-8 h-8 text-white" />
+                      } rounded-2xl p-6 border transition-all duration-500 hover:scale-[1.02] cursor-pointer group shadow-lg hover:shadow-xl`}
+                      onClick={() => openProject(project)}>
+                         
+                        {/* Project Header */}
+                        <div className="mb-4">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className={`w-10 h-10 bg-gradient-to-r ${project.color} rounded-full flex items-center justify-center text-white font-bold text-base shadow-lg`}>
+                              {index + 1}
+                            </div>
+                            <span className="text-xs font-medium text-purple-400 bg-purple-400/10 px-2 py-1 rounded-full border border-purple-400/20">
+                              {project.period}
+                            </span>
+                          </div>
+                          <h3 className={`text-xl font-bold group-hover:text-purple-400 transition-colors mb-1 ${
+                            isDarkMode ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            {project.title}
+                          </h3>
+                          <p className="text-purple-400 text-sm font-medium">{project.subtitle}</p>
                         </div>
-                        <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{project.title}</h3>
-                        <p className="text-purple-400">{project.subtitle}</p>
+
+                        {/* Project Description */}
+                        <p className={`text-sm leading-relaxed mb-4 ${
+                          isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                        }`}>
+                          {project.description}
+                        </p>
+
+                        {/* Project Thumbnails */}
+                        <div className="flex gap-2 mb-4">
+                          {project.images.slice(0, 3).map((image, imgIndex) => (
+                            <div key={imgIndex} className="w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent group-hover:border-purple-400 transition-all duration-300 shadow-md">
+                              <img
+                                src={image}
+                                alt={`${project.title} - ${imgIndex + 1}`}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
+                        </div>
+                          ))}
                       </div>
+
+                        {/* Technologies */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {project.technologies.slice(0, 2).map((tech) => (
+                            <span
+                              key={tech}
+                              className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 px-2 py-1 rounded-full text-xs font-medium"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {project.technologies.length > 2 && (
+                            <span className="text-purple-400 text-xs px-2 py-1 bg-purple-400/10 rounded-full border border-purple-400/20">
+                              +{project.technologies.length - 2} more
+                            </span>
+                          )}
                     </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex items-center justify-between pt-1">
+                          <div className="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors">
+                            <span className="text-sm font-medium">{t.viewDetails}</span>
+                            <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
 
-                  {/* Project Info */}
-                  <div className="flex-1 space-y-4">
-                    <div className="flex items-center gap-2 text-purple-400">
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-sm">{project.period}</span>
+                          {/* Figma Button */}
+                          {project.figma && (
+                            <a
+                              href={project.figma}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium text-xs shadow-lg transition-all duration-300 hover:scale-105 ${
+                                isDarkMode 
+                                  ? 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-purple-500/25' 
+                                  : 'bg-purple-100 text-purple-700 hover:bg-purple-200 hover:shadow-purple-500/25'
+                              }`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Figma className="w-3 h-3" />
+                              Figma
+                            </a>
+                          )}
                     </div>
-                    
-                    <h3 className={`text-2xl md:text-3xl font-bold group-hover:text-purple-400 transition-colors ${
+                      </div>
+                    </div>
+                  ) : (
+                    /* Project Card - Right Side (Odd Index) */
+                    <div className="ml-16 md:ml-auto md:pl-8 md:w-[48%]">
+                      <div className={`${
+                        isDarkMode 
+                          ? 'bg-white/5 backdrop-blur-lg border-white/10 hover:border-purple-500/50 hover:bg-white/10' 
+                          : 'bg-white/80 backdrop-blur-lg border-gray-200/50 hover:border-purple-500/50 hover:bg-white'
+                      } rounded-2xl p-6 border transition-all duration-500 hover:scale-[1.02] cursor-pointer group shadow-lg hover:shadow-xl`}
+                      onClick={() => openProject(project)}>
+                         
+                        {/* Project Header */}
+                        <div className="mb-4">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className={`w-10 h-10 bg-gradient-to-r ${project.color} rounded-full flex items-center justify-center text-white font-bold text-base shadow-lg`}>
+                              {index + 1}
+                            </div>
+                            <span className="text-xs font-medium text-purple-400 bg-purple-400/10 px-2 py-1 rounded-full border border-purple-400/20">
+                              {project.period}
+                            </span>
+                          </div>
+                          <h3 className={`text-xl font-bold group-hover:text-purple-400 transition-colors mb-1 ${
                       isDarkMode ? 'text-white' : 'text-gray-900'
                     }`}>
                       {project.title}
                     </h3>
+                          <p className="text-purple-400 text-sm font-medium">{project.subtitle}</p>
+                        </div>
                     
-                    <p className={`text-lg leading-relaxed ${
+                        {/* Project Description */}
+                        <p className={`text-sm leading-relaxed mb-4 ${
                       isDarkMode ? 'text-gray-300' : 'text-gray-600'
                     }`}>
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 4).map((tech) => (
+                        {/* Project Thumbnails */}
+                        <div className="flex gap-2 mb-4">
+                          {project.images.slice(0, 3).map((image, imgIndex) => (
+                            <div key={imgIndex} className="w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent group-hover:border-purple-400 transition-all duration-300 shadow-md">
+                              <img
+                                src={image}
+                                alt={`${project.title} - ${imgIndex + 1}`}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Technologies */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {project.technologies.slice(0, 2).map((tech) => (
                         <span
                           key={tech}
-                          className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-sm"
+                              className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 px-2 py-1 rounded-full text-xs font-medium"
                         >
                           {tech}
                         </span>
                       ))}
-                      {project.technologies.length > 4 && (
-                        <span className="text-purple-400 text-sm px-3 py-1">
-                          +{project.technologies.length - 4} more
+                          {project.technologies.length > 2 && (
+                            <span className="text-purple-400 text-xs px-2 py-1 bg-purple-400/10 rounded-full border border-purple-400/20">
+                              +{project.technologies.length - 2} more
                         </span>
                       )}
                     </div>
 
+                        {/* Action Buttons */}
+                        <div className="flex items-center justify-between pt-1">
                     <div className="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors">
-                      <span className="font-medium">{t.viewDetails}</span>
+                            <span className="text-sm font-medium">{t.viewDetails}</span>
                       <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
+                          
+                          {/* Figma Button */}
+                          {project.figma && (
+                            <a
+                              href={project.figma}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium text-xs shadow-lg transition-all duration-300 hover:scale-105 ${
+                                isDarkMode 
+                                  ? 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-purple-500/25' 
+                                  : 'bg-purple-100 text-purple-700 hover:bg-purple-200 hover:shadow-purple-500/25'
+                              }`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Figma className="w-3 h-3" />
+                              Figma
+                            </a>
+                          )}
                   </div>
                 </div>
+                    </div>
+                  )}
               </div>
             ))}
+            </div>
           </div>
         </div>
       </section>
