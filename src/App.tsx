@@ -517,27 +517,7 @@ const App = () => {
              color: "from-green-500 to-emerald-500",
        figma: "https://www.figma.com/design/2yXyFNJkuaGIbdrXBnvkXc/Jobspot?node-id=1-48&t=wzrN82kDH09DqiFp-1"
     },
-    {
-      id: 4,
-      title: "UrbanFit – Fashion & Lifestyle Onboarding App",
-      subtitle: "UX/UI & Graphic Design (Freelance Project)",
-      period: "03/2024 - 07/2024",
-      description: "Mobile app onboarding experience for fashion and lifestyle brand",
-      technologies: ["Figma", "Mobile Design", "UI/UX Design", "Brand Design", "Prototyping"],
-      responsibilities: [
-        "Created splash screen, onboarding flow, and responsive mobile layouts with brand-consistent typography, color palette, and imagery",
-        "Developed interactive high-fidelity mockups and design prototypes in Figma for developer handoff",
-        "Collaborated closely with developers to ensure design feasibility and pixel-perfect implementation",
-        "Participated in brainstorming sessions with the marketing team to align visuals with campaign messages",
-        "Delivered final design assets on schedule, resulting in a smooth development process and positive client feedback"
-      ],
-             images: [
-         "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
-         "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
-       ],
-       color: "from-pink-500 to-rose-500",
-       figma: "https://www.figma.com/design/p3Pvh4KHq82PDEgD6TP6Hc/Freelance---Ecommerce-App?node-id=0-1&t=4IO0rKhZV5qviD5u-1"
-    },
+    
     {
       id: 5,
       title: "25h Studio",
